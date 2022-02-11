@@ -26,7 +26,7 @@ type Reader struct {
 
 type IReadListener interface {
 	// Return false to stop parse
-	onParam(name string, value string) bool
+	OnParam(name string, value string) bool
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -76,7 +76,7 @@ func (reader Reader) ReadAll(filePath string, listener IReadListener) error {
 		paramName = line[0:equalIndex]
 		paramValue = line[equalIndex+1:]
 
-		if !listener.onParam(paramName, paramValue) {
+		if !listener.OnParam(paramName, paramValue) {
 			break
 		}
 

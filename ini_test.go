@@ -30,7 +30,7 @@ func newDB() Database {
 	return db
 }
 
-func (db *Database) onParam(name string, value string) bool {
+func (db *Database) OnParam(name string, value string) bool {
 	if name == "db" {
 		db.db = value
 		return true
