@@ -26,7 +26,7 @@ type Reader struct {
 
 type IReadListener interface {
 	// Return false to stop parse
-	OnParam(name string, value string) bool
+	OnParam(name string, value string) error
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -40,6 +40,8 @@ func NewReader() Reader {
 }
 
 func (reader Reader) ReadAll(filePath string, listener IReadListener) error {
+	var err error
+
 	file, err := os.Open(filePath)
 	if err != nil {
 		return err
@@ -76,14 +78,15 @@ func (reader Reader) ReadAll(filePath string, listener IReadListener) error {
 		paramName = line[0:equalIndex]
 		paramValue = line[equalIndex+1:]
 
-		if !listener.OnParam(paramName, paramValue) {
+		err = listener.OnParam(paramName, paramValue)
+		if err != nil {
 			break
 		}
 
 		lineIndex++
 	}
 
-	return nil
+	return err
 }
 
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =

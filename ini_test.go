@@ -30,29 +30,29 @@ func newDB() Database {
 	return db
 }
 
-func (db *Database) OnParam(name string, value string) bool {
+func (db *Database) OnParam(name string, value string) error {
 	if name == "db" {
 		db.db = value
-		return true
+		return nil
 	}
 	if name == "name" {
 		db.name = value
-		return true
+		return nil
 	}
 	if name == "host" {
 		db.host = value
-		return true
+		return nil
 	}
 	if name == "driver" {
 		db.driver = value
-		return true
+		return nil
 	}
 	if name == "password" {
 		db.password = value
-		return true
+		return nil
 	}
 
-	return true
+	return nil
 }
 
 func (db *Database) readConfig() error {
